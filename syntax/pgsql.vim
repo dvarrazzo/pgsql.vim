@@ -345,15 +345,15 @@ syn region pgsqlType		 start="\<bit\_s\+varying\_s*(" end=")" contains=pgsqlNumb
 syn keyword pgsqlOperator	 between and is like regexp rlike
 syn match   pgsqlOperator	 "\<not\>"
 syn match   pgsqlOperator	 "\<or\>"
-syn region pgsqlOperator	 start="isnull\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="coalesce\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="interval\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="in\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="any\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="some\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="all\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="exists\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="array\_s*\[" end="\]" contains=ALL
+syn region pgsqlOperator	 start="\<isnull\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 start="\<coalesce\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 start="\<interval\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 start="\<in\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 start="\<any\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 start="\<some\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 start="\<all\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 start="\<exists\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 start="\<array\_s*\[" end="\]" contains=ALL
 
 " Let's consider this an operator, not operator + constant
 syn match   pgsqlKeyword	 "\<not\_s\+null\>"
