@@ -125,6 +125,7 @@ syn match pgsqlKeyword      "\<for\_s\+\(search\|order\_s\+by\)\>"
 syn match pgsqlKeyword      "\<\(no\_s\+\)\?inherit\>"
 syn match pgsqlKeyword      "\<\(not\_s\+\)\?of\>"
 syn match pgsqlKeyword      "\<primary\_s\+key\>"
+syn match pgsqlKeyword      "\<foreign\_s\+key\>"
 syn match pgsqlKeyword      "\<replica\_s\+identity\>"
 syn match pgsqlKeyword      "\<using\(\_s\+index\(\_s\+tablespace\)\?\)\?\>"
 syn match pgsqlKeyword      "\<with\(out\)\?\_s\+function\>"
@@ -197,7 +198,7 @@ syn keyword pgsqlKeyword	 checkpoint check cost
 syn keyword pgsqlKeyword	 check column columns constraint
 syn keyword pgsqlKeyword	 databases distinct declare deallocate desc
 syn keyword pgsqlKeyword	 deferrable diagnostics
-syn keyword pgsqlKeyword	 explain elsif exclusion found exception except exit
+syn keyword pgsqlKeyword	 explain elsif exclusion found exception except exclude exit
 syn keyword pgsqlKeyword	 force
 syn keyword pgsqlKeyword	 group global get
 syn keyword pgsqlKeyword	 having

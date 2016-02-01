@@ -310,9 +310,11 @@ create or replace rule as on update to foo where bah do also nothing
 do instead whatever
 create temp sequence
 create unlogged table if not exists
+foreign key
 on commit preserve rows
 on commit delete rows
 on commit drop
+exclude using foo
 match full match partial match simple
 including constraints
 excluding
@@ -526,6 +528,7 @@ with admin
 admin option
 insert
 exclusive mode
+foreign
 reindex
 by
 order
