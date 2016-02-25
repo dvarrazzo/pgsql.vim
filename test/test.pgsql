@@ -484,6 +484,23 @@ show all
 update only
 vacuum full freeze verbose
 vacuum full verbose analyze wat
+exception
+raise
+raise debug
+raise log
+raise info
+raise notice
+raise warning
+raise exception
+foreach
+while aaaa loop
+end loop
+continue
+continue when
+continue asdf when
+exit
+exit when
+exit asdf when
 
 -- False statements
 beginz
@@ -541,7 +558,6 @@ temporary
 snapshot
 characteristics
 restart
-continue
 replica
 always
 data type
@@ -553,6 +569,9 @@ comment
 before mah
 instead of bah
 using gin (data)
+debug
+log
+info
 
 
 -- Complete examples

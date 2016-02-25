@@ -33,6 +33,7 @@ syn match pgsqlKeyword	    "\<add\>"
 syn match pgsqlKeyword	    "\<all\>"
 syn match pgsqlKeyword	    "\<cast\>"
 syn match pgsqlKeyword	    "\<cluster\>"
+syn match pgsqlKeyword	    "\<continue\>"
 syn match pgsqlKeyword	    "\<copy\>"
 syn match pgsqlKeyword	    "\<default\>"
 syn match pgsqlKeyword	    "\<do\>"
@@ -41,6 +42,7 @@ syn match pgsqlKeyword	    "\<end\>"
 " fun fact: 'create table fetch ()' fails, but not 'create table move ()'
 syn match pgsqlKeyword      "\<fetch\>"
 syn match pgsqlKeyword      "\<for\>"
+syn match pgsqlKeyword      "\<foreach\>"
 syn match pgsqlKeyword      "\<full\>"
 syn match pgsqlKeyword	    "\<from\>"
 syn match pgsqlKeyword      "\<grant\>"
@@ -53,6 +55,7 @@ syn match pgsqlKeyword      "\<nothing\>"
 syn match pgsqlKeyword      "\<on\>"
 syn match pgsqlKeyword	    "\<only\>"
 syn match pgsqlKeyword	    "\<options\>"
+syn match pgsqlKeyword	    "\<raise\>"
 syn match pgsqlKeyword	    "\<range\>"
 syn match pgsqlKeyword      "\<returns\>"
 syn match pgsqlKeyword	    "\<row\>"
@@ -64,6 +67,7 @@ syn match pgsqlKeyword	    "\<to\>"
 syn match pgsqlKeyword	    "\<user\>"
 syn match pgsqlKeyword	    "\<update\>"
 syn match pgsqlKeyword      "\<with\(\_s\+recursive\)\?\>"
+syn match pgsqlKeyword	    "\<while\>"
 syn match pgsqlKeyword	    "\<where\>"
 
 syn match pgsqlKeyword      "\<\(begin\|commit\|rollback\|abort\|start\|end\)\(\_s\+work\|\_s\+transaction\)\?\>"
@@ -191,6 +195,9 @@ syn match pgsqlKeyword      "\<show\(\_s\+all\)\?\>"
 syn match pgsqlKeyword      "\<\(restart\|continue\)\_s\+identity\>"
 
 syn match pgsqlKeyword      "\<vacuum\(\_s\+full\|\_s\+freeze\|\_s\+verbose\)*\>"
+
+" PL/pgSQL constructs
+syn match pgsqlKeyword      "\<raise\_s\+\(debug\|log\|info\|notice\|warning\|exception\)\>"
 
 syn keyword pgsqlKeyword	 and alias asc
 syn keyword pgsqlKeyword	 cascade current_date current_time current_timestamp
