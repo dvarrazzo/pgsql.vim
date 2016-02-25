@@ -57,6 +57,7 @@ syn match pgsqlKeyword	    "\<only\>"
 syn match pgsqlKeyword	    "\<options\>"
 syn match pgsqlKeyword	    "\<raise\>"
 syn match pgsqlKeyword	    "\<range\>"
+syn match pgsqlKeyword      "\<return\>"
 syn match pgsqlKeyword      "\<returns\>"
 syn match pgsqlKeyword	    "\<row\>"
 syn match pgsqlKeyword	    "\<rows\>"
@@ -198,6 +199,7 @@ syn match pgsqlKeyword      "\<vacuum\(\_s\+full\|\_s\+freeze\|\_s\+verbose\)*\>
 
 " PL/pgSQL constructs
 syn match pgsqlKeyword      "\<raise\_s\+\(debug\|log\|info\|notice\|warning\|exception\)\>"
+syn match pgsqlKeyword      "\<return\_s\+query\>"
 
 syn keyword pgsqlKeyword	 and alias asc
 syn keyword pgsqlKeyword	 cascade current_date current_time current_timestamp
@@ -216,7 +218,7 @@ syn keyword pgsqlKeyword	 out open offset
 syn keyword pgsqlKeyword	 password privilege
 syn keyword pgsqlKeyword	 perform
 syn keyword pgsqlKeyword	 replace references restrict returning
-syn keyword pgsqlKeyword	 reassing return
+syn keyword pgsqlKeyword	 reassing
 syn keyword pgsqlKeyword	 strict sequences stable setof
 syn keyword pgsqlKeyword	 truncate tranaction trigger trusted
 syn keyword pgsqlKeyword	 unique unlisten

@@ -501,6 +501,10 @@ continue asdf when
 exit
 exit when
 exit asdf when
+return
+return next
+return query
+return query execute
 
 -- False statements
 beginz
