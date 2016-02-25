@@ -289,6 +289,7 @@ drop attribute
 cluster
 cluster verbose asdf using
 comment on foreign table asdf is $$wat$$
+rename
 
 create aggregate
 create cast (foo as bar)
