@@ -88,7 +88,7 @@ syn match pgsqlKeyword      "\<current\_s\+of\>"
 syn match pgsqlKeyword      "\<delete\_s\+from\>"
 syn match pgsqlKeyword      "\<discard\_s\+\(all\|plans\|sequences\|temp\|temporary\)\>"
 
-syn match pgsqlKeyword      "\<\(alter\|add\|drop\|comment\_s\+on\|create\)\_s\+\(aggregate\|attribute\|cast\|collation\|conversion\|database\|default\_s\+privileges\|domain\|\(event\_s\+\)\?trigger\|extension\|foreign\_s\+\(data\_s\+wrapper\|table\)\|function\|group\|index\(\_s\+concurrently\)\?\|\(procedural\_s\+\)\?language\|materialized\_s\+view\|operator\(\_s\+class\|\_s\+family\)\?\|owned\_s\+by\|role\|rule\|schema\|sequence\|server\|table\|tablespace\|text\_s\+search\_s\+\(configuration\|dictionary\|parser\|template\)\|type\|user\(\_s\+mapping\)\?\|view\)\>"
+syn match pgsqlKeyword      "\<\(alter\|add\|drop\|comment\_s\+on\|create\)\_s\+\(aggregate\|attribute\|cast\|collation\|conversion\|database\|column\|default\_s\+privileges\|domain\|\(event\_s\+\)\?trigger\|extension\|foreign\_s\+\(data\_s\+wrapper\|table\)\|function\|group\|index\(\_s\+concurrently\)\?\|\(procedural\_s\+\)\?language\|materialized\_s\+view\|operator\(\_s\+class\|\_s\+family\)\?\|owned\_s\+by\|role\|rule\|schema\|sequence\|server\|table\|tablespace\|text\_s\+search\_s\+\(configuration\|dictionary\|parser\|template\)\|type\|user\(\_s\+mapping\)\?\|view\)\>"
 
 syn match pgsqlKeyword      "\<create\_s\+default\_s\+conversion\>"
 syn match pgsqlKeyword      "\<create\_s\+\(or\_s\+replace\_s\+\)\?\(function\|\(trusted\_s\+\)\?\(procedural\_s\+\)\?language\|rule\)\>"
@@ -205,7 +205,7 @@ syn match pgsqlKeyword      "\<return\_s\+query\>"
 syn keyword pgsqlKeyword	 and alias asc
 syn keyword pgsqlKeyword	 cascade current_date current_time current_timestamp
 syn keyword pgsqlKeyword	 checkpoint check cost
-syn keyword pgsqlKeyword	 check column columns constraint
+syn keyword pgsqlKeyword	 check columns constraint
 syn keyword pgsqlKeyword	 databases distinct declare deallocate desc
 syn keyword pgsqlKeyword	 deferrable diagnostics
 syn keyword pgsqlKeyword	 explain elsif exclusion found exception except exclude exit
