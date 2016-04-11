@@ -115,7 +115,7 @@ syn match pgsqlKeyword      "\<\(disable\|enable\(\_s\+\(replica\|always\)\)\?\)
 syn match pgsqlKeyword      "\<\(no\_s\+\)\?\(handler\|validator\)\>"
 syn match pgsqlKeyword      "\<if\_s\+\(not\_s\+\)\?exists\>"
 syn match pgsqlKeyword      "\<\(set\|drop\)\_s\+\(default\|not\_s\+null\)\>"
-syn match pgsqlKeyword      "\<\(set\_s\+data\_s\+\)type\>"
+syn match pgsqlKeyword      "\<\(set\_s\+data\_s\+\)\?type\>"
 syn match pgsqlKeyword      "\<set\_s\+storage\_s\+\(plain\|external\|extended\|main\)\>"
 syn match pgsqlKeyword      "\<set\_s\+statistics\>"
 syn match pgsqlKeyword      "\<cluster\_s\+on\>"

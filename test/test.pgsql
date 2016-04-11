@@ -208,6 +208,9 @@ alter default privileges in schema asdf
 alter table foo drop constraint bar
 alter table foo rename constraint bar
 alter table foo validate constraint bar
+alter table foo alter column bar type baz;
+alter table foo alter column bar set data type baz;
+alter table foo alter column bar set default baz;
 alter event trigger foo disable
 alter event trigger foo enable
 alter event trigger foo enable replica
@@ -540,11 +543,9 @@ tablespace
 text search configuration
 text search template
 trigger
-type
 user mapping
 view
 format asdf
-fetch
 on all function in schema
 with admin
 admin option
