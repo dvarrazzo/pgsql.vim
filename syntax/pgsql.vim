@@ -274,6 +274,11 @@ syn keyword pgsqlVariable   tg_table_name tg_table_schema tg_nargs tg_argv
 syn match pgsqlVariable		 "\$[0-9]\+"
 syn match pgsqlLabel		 "<<[^>]\+>>"
 
+" psql variables
+syn match pgsqlVariable		 ":[a-zA-Z0-9]\+"
+syn match pgsqlVariable		 ":'[a-zA-Z0-9]\+'"
+syn match pgsqlVariable		 ":\"[a-zA-Z0-9]\+\""
+
 " Is this a class of things or just a sort of an alien?
 syn match pgsqlExtschema		 "@extschema@"
 

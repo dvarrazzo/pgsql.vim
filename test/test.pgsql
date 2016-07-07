@@ -168,6 +168,11 @@ U&'d\0061t\+000061'
 -- Variables
 tg_op old new
 
+:foo
+:'bar'
+:"baz"
+
+
 -- Statements
 begin;
 begin work;
