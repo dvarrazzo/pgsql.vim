@@ -24,6 +24,8 @@ syn case ignore
 
 " Section: Miscellaneous {{{2
 
+syn region pgsqlIdentifier	 matchgroup=Parens start="("  end=")" contains=ALL
+
 " General keywords which don't fall into other categories {{{3
 "
 " Use match instead of keyword to lower priority and allow data types bits
@@ -31,14 +33,17 @@ syn case ignore
 syn match pgsqlKeyword	    "\<as\>"
 syn match pgsqlKeyword	    "\<add\>"
 syn match pgsqlKeyword	    "\<all\>"
+syn match pgsqlKeyword	    "\<authorization\>"
 syn match pgsqlKeyword	    "\<cast\>"
 syn match pgsqlKeyword	    "\<cluster\>"
+syn match pgsqlKeyword	    "\<conflict\>"
 syn match pgsqlKeyword	    "\<continue\>"
 syn match pgsqlKeyword	    "\<copy\>"
 syn match pgsqlKeyword	    "\<default\>"
 syn match pgsqlKeyword	    "\<do\>"
 syn match pgsqlKeyword	    "\<drop\>"
 syn match pgsqlKeyword	    "\<end\>"
+syn match pgsqlOperator     "\<exists\>"
 " fun fact: 'create table fetch ()' fails, but not 'create table move ()'
 syn match pgsqlKeyword      "\<fetch\>"
 syn match pgsqlKeyword      "\<for\>"
@@ -46,7 +51,6 @@ syn match pgsqlKeyword      "\<foreach\>"
 syn match pgsqlKeyword      "\<full\>"
 syn match pgsqlKeyword	    "\<from\>"
 syn match pgsqlKeyword      "\<grant\>"
-syn match pgsqlKeyword	    "\<group\>"
 syn match pgsqlKeyword      "\<if\>"
 syn match pgsqlOperator     "\<in\>"
 syn match pgsqlKeyword	    "\<key\>"
@@ -179,6 +183,7 @@ syn match pgsqlKeyword      "\<with\_s\+ordinality\>"
 syn match pgsqlKeyword      "\<\(\(inner\|cross\|\(left\|right\|full\)\(\_s\+outer\)\?\)\_s\+\)\?join\>"
 syn match pgsqlKeyword      "\<union\(\_s\+all\)\?\>"
 syn match pgsqlKeyword      "\<\(unbounded\_s\+\)\?\(preceding\|following\)\>"
+syn match pgsqlKeyword      "\<group\_s\+by\>"
 syn match pgsqlKeyword      "\<order\_s\+by\>"
 syn match pgsqlKeyword      "\<current\_s\+row\>"
 syn match pgsqlKeyword      "\<partition\_s\+by\>"
@@ -203,23 +208,26 @@ syn match pgsqlKeyword      "\<raise\_s\+\(debug\|log\|info\|notice\|warning\|ex
 syn match pgsqlKeyword      "\<return\_s\+query\>"
 
 syn keyword pgsqlKeyword	 and alias asc
-syn keyword pgsqlKeyword	 cascade current_date current_time current_timestamp
+syn keyword pgsqlKeyword	 cascade
 syn keyword pgsqlKeyword	 checkpoint check cost
 syn keyword pgsqlKeyword	 check columns constraint
-syn keyword pgsqlKeyword	 databases distinct declare deallocate desc
+syn keyword pgsqlKeyword	 databases
+syn keyword pgsqlKeyword	 declare deallocate desc
 syn keyword pgsqlKeyword	 deferrable diagnostics
+syn match   pgsqlKeyword     "\<distinct\>"
 syn keyword pgsqlKeyword	 explain elsif exclusion found exception except exclude exit
 syn keyword pgsqlKeyword	 force
-syn keyword pgsqlKeyword	 group global get
+syn keyword pgsqlKeyword	 global get
 syn keyword pgsqlKeyword	 having
 syn keyword pgsqlKeyword	 immutable inherits inline intersect
 syn keyword pgsqlKeyword	 leakproof lock local limit load loop listen lateral
-syn keyword pgsqlKeyword	 notify next nowait
+syn keyword pgsqlKeyword	 natural next notice notify nowait
 syn keyword pgsqlKeyword	 out open offset
 syn keyword pgsqlKeyword	 password privilege
 syn keyword pgsqlKeyword	 perform
-syn keyword pgsqlKeyword	 replace references restrict returning
-syn keyword pgsqlKeyword	 reassing
+syn keyword pgsqlKeyword	 query
+syn keyword pgsqlKeyword	 raise reassing references replace restrict
+syn keyword pgsqlKeyword	 return returning 
 syn keyword pgsqlKeyword	 strict sequences stable setof
 syn keyword pgsqlKeyword	 truncate tranaction trigger trusted
 syn keyword pgsqlKeyword	 unique unlisten
@@ -235,13 +243,13 @@ syn match   pgsqlConstant	 "\<null\>"
 
 " Section: Strings {{{2
 " Strings (single- and double-quote)
-syn region pgsqlIdentifier	 start=+"+  skip=+\\\\\|\\"+  end=+"+
-syn region pgsqlIdentifier	 start=+U&"+  skip=+\\\\\|\\"+  end=+"+
+syn region pgsqlIdentifier	 matchgroup=Quote start=+"+  skip=+\\\\\|\\"+  end=+"+
+syn region pgsqlIdentifier	 matchgroup=Quote start=+U&"+  skip=+\\\\\|\\"+  end=+"+
 
-syn region pgsqlString		 start=+'+  skip=+\\\\\|\\'+  end=+'+
-syn region pgsqlString		 start=+U&'+  skip=+\\\\\|\\'+  end=+'+
-
-syn match pgsqlString		 "\$\w*\$"
+syn region pgsqlString		 matchgroup=Quote start=+'+  skip=+\\\\\|\\'+  end=+'+
+syn region pgsqlString		 matchgroup=Quote start=+U&'+  skip=+\\\\\|\\'+  end=+'+
+syn region pgsqlString		 matchgroup=Quote start=+\$\z([^\$]*\)\$+  end=+\$\z1\$+
+syn region pgsqlIdentifier	 matchgroup=Quote start=+\$\z(function\|sql\)\$+  end=+\$\z1\$+ contains=ALL
 " }}}
 
 " Section: Numbers {{{2
@@ -258,7 +266,8 @@ syn match pgsqlNumber		 "\<0x[abcdefABCDEF0-9]*\>"
 syn region  pgsqlComment    start="/\*"  end="\*/" contains=pgsqlTodo,pgsqlComment
 syn match   pgsqlComment    "--.*" contains=pgsqlTodo
 syn sync    ccomment        pgsqlComment
-syn keyword pgsqlTodo       todo note xxx warn warning contained
+syn keyword pgsqlTodo       todo xxx warn warning contained
+syn match   pgsqlTodo       "\<note:"
 " }}}
 
 " Section: Variables {{{2
@@ -275,9 +284,11 @@ syn match pgsqlVariable		 "\$[0-9]\+"
 syn match pgsqlLabel		 "<<[^>]\+>>"
 
 " psql variables
-syn match pgsqlVariable		 ":[a-zA-Z0-9]\+"
-syn match pgsqlVariable		 ":'[a-zA-Z0-9]\+'"
-syn match pgsqlVariable		 ":\"[a-zA-Z0-9]\+\""
+" negative lookbehinds would tend to be slow,
+" but this is only checking for one character, so I'm optimistic
+syn match pgsqlVariable		 ":\@<!:[a-zA-Z0-9]\+"
+syn match pgsqlVariable		 ":\@<!:'[a-zA-Z0-9]\+'"
+syn match pgsqlVariable		 ":\@<!:\"[a-zA-Z0-9]\+\""
 
 " Is this a class of things or just a sort of an alien?
 syn match pgsqlExtschema		 "@extschema@"
@@ -299,7 +310,6 @@ syn keyword pgsqlType        internal int2vector int int2 int4 int8 integer
 syn keyword pgsqlType        json jsonb
 syn keyword pgsqlType        line lseg language_handler
 syn keyword pgsqlType        macaddr money
-syn keyword pgsqlType        numeric
 syn keyword pgsqlType        opaque oidvector oid
 syn keyword pgsqlType        polygon point path period
 syn keyword pgsqlType        regclass real regtype refcursor regoperator
@@ -311,7 +321,7 @@ syn keyword pgsqlType        tsquery tinterval
 syn keyword pgsqlType        trigger tid text
 syn keyword pgsqlType        tsvector txid_snapshot
 syn keyword pgsqlType        unknown uuid
-syn keyword pgsqlType        void varchar
+syn keyword pgsqlType        void
 syn keyword pgsqlType        xml xid
 " %rowtype, %type PL/pgSQL constructs
 syn match pgsqlType          "%\(row\)\?type\>"
@@ -330,7 +340,6 @@ syn region pgsqlType		 start="\<decimal\_s*(" end=")" contains=pgsqlNumber,pgsql
 syn match  pgsqlType		 "\<time\(stamp\(tz\)\?\)\?\>"
 syn region pgsqlType		 start="\<time\(stamp\(tz\)\?\)\?\_s*(" end=")" contains=pgsqlNumber,pgsqlVariable
 syn match  pgsqlType		 "\<interval\>"
-syn region pgsqlType		 start="\<interval\_s*(" end=")" contains=pgsqlNumber,pgsqlVariable
 syn match  pgsqlType		 "\<interval\_s\+\(year\|month\|day\|hour\|minute\|second\)\>"
 syn match  pgsqlType		 "\<interval\_s\+year\_s\+to\_s\+month\>"
 syn match  pgsqlType		 "\<interval\_s\+day\_s\+to\_s\+\(hour\|minute\|second\)\>"
@@ -355,20 +364,20 @@ syn region pgsqlType		 start="\<bit\_s\+varying\_s*(" end=")" contains=pgsqlNumb
 
 " Section: Operators {{{1
 " Logical, string and  numeric operators
-" TODO: terms contained within the function are not keywords! --Ryan Delaney 2014-02-06T14:11-0800 OpenGPG: 0D98863B4E1D07B6
 " note: the 'in' operator is defined above, before lockmodes
-syn keyword pgsqlOperator	 between and is like regexp rlike
+syn keyword pgsqlOperator	 array between symmetric and is like regexp rlike ilike any
 syn match   pgsqlOperator	 "\<not\>"
 syn match   pgsqlOperator	 "\<or\>"
-syn region pgsqlOperator	 start="\<isnull\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="\<coalesce\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="\<interval\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="\<in\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="\<any\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="\<some\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="\<all\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="\<exists\_s*(" end=")" contains=ALL
-syn region pgsqlOperator	 start="\<array\_s*\[" end="\]" contains=ALL
+syn region pgsqlOperator	 start="isnull\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 start="interval\_s*(" end=")" contains=ALL
+syn region pgsqlOperator	 matchgroup=Quote start="\[" end="\]" contains=ALL
+syn match pgsqlOperator	     "\<distinct\_s\+from\>"
+syn match pgsqlOperator	     ":="
+syn match pgsqlOperator	     "="
+syn match pgsqlOperator	     "<>"
+syn match pgsqlOperator	     "!="
+syn match pgsqlOperator	     ">=\?"
+syn match pgsqlOperator	     "<=\?"
 
 " Let's consider this an operator, not operator + constant
 syn match   pgsqlKeyword	 "\<not\_s\+null\>"
@@ -2262,35 +2271,28 @@ syn region pgsqlFunction	start="xpath'(" end=")" contains=ALL
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
 " For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_pgsql_syn_inits")
-  if version < 508
-    let did_pgsql_syn_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
 
-  HiLink pgsqlKeyword		Statement
-  HiLink pgsqlConstant		Constant
-  HiLink pgsqlString		String
-  HiLink pgsqlNumber		Number
-  HiLink pgsqlVariable		Identifier
-  HiLink pgsqlComment		Comment
-  HiLink pgsqlType			Type
-  HiLink pgsqlOperator		Statement
-  HiLink pgsqlFlow			Statement
-  HiLink pgsqlFunction		Function
-  HiLink pgsqlLabel			Label
-  HiLink pgsqlExtschema		Special
-  HiLink pgsqlTodo			Todo
-  HiLink pgsqlIdentifier	Normal
-  HiLink pgsqlCopy			Normal
-  HiLink pgsqlBackslash		Special
-  delcommand HiLink
-endif
+hi def link Parens				Delimiter
+hi def link Quote				Delimiter
+hi def link pgsqlKeyword		Statement
+hi def link pgsqlConstant		Constant
+hi def link pgsqlString	  	 	String
+hi def link pgsqlNumber			Number
+hi def link pgsqlVariable		Identifier
+hi def link pgsqlComment		Comment
+hi def link pgsqlType			Type
+hi def link pgsqlOperator		Operator
+hi def link pgsqlFlow			Statement
+hi def link pgsqlFunction		Function
+hi def link pgsqlLabel			Label
+hi def link pgsqlExtschema		Special
+hi def link pgsqlTodo			Todo
+hi def link pgsqlIdentifier		Normal
+hi def link pgsqlCopy			Normal
+hi def link pgsqlBackslash		Special
 " }}}
 
-let b:current_syntax = "pgsql"
+let b:current_syntax = 'pgsql'
 
 " Section: Modelines {{{1
 " vim600: set foldmethod=marker foldlevel=0 :

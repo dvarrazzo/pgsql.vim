@@ -55,10 +55,11 @@ time (10)
 time
     (10) without time zone
 time (10) with time zone
+-- timestamp should be a type, not a function
+'infinity'::timestamp
 interval
 extract(month from whatever)
 interval (10)
--- TODO: why is this all a keyword???
 extract(month from whatever)
 interval year
 extract(month from whatever)
@@ -130,7 +131,15 @@ false
 any(x),  any (x)
 all(x),  all (x)
 array[10,20],    array [10]
-
+a not b
+a <> b
+a != b
+a > b
+a < b
+a >= b
+a <= b
+a is distinct from b
+a := b
 -- false positive constant
 not null
 
@@ -244,7 +253,6 @@ true or false
 blah in (10, 20)
 blah not in (10, 20)
 exists (select 10)
--- TODO: bah shoud not be keyword
 any (select 10 from bah)
 some (select 10 from bah)
 
@@ -312,6 +320,7 @@ create event trigger execute procedure
 create extension with schema x version y from z
 create or replace function returns xcf language plpgsql
 create or replace trusted procedural language x handler x validator x inline x
+create schema foo authorization bar
 create trusted procedural language x handler x validator x inline x
 create unique index foo
 create unique index concurrently foo
@@ -594,6 +603,7 @@ CREATE OR REPLACE FUNCTION audit."foobar.account_fn"()
  LANGUAGE plpgsql
  SECURITY DEFINER
 AS $function$
+-- should highlight as SQL
 begin
     if tg_op <> 'DELETE' then
         insert into audit."foobar.account" values (default, tg_op, new.*);
@@ -608,3 +618,39 @@ $function$;
 CREATE TRIGGER "foobar.account_audit_trg"
 AFTER INSERT OR UPDATE OR UPDATE ON foobar.account
 FOR EACH ROW EXECUTE PROCEDURE audit."foobar.account_fn"();
+
+
+COMMENT ON TABLE foo IS
+$foo$This is a string that should look like
+a string.$foo$;
+
+
+COMMENT ON TABLE bar IS
+$$This is also a string that should look like
+a string.$$;
+
+
+DELETE FROM knockout.sponsored cc
+WHERE (product_id, applications) IN (
+  SELECT p.id, c.id
+  FROM sponsored.product p
+  JOIN sponsored.regional cc
+    ON cc.product_id = p.id
+  JOIN sponsored.product_category c
+    ON c.id = cc.applications
+  WHERE c.name like 'destiny%'
+    AND p.name ilike '%habituate merry%'
+);
+
+-- FROM subquery + coalesce
+SELECT
+    foo, bar
+FROM (
+    SELECT COALESCE(baz, quux) AS artillery
+    FROM expressway
+    JOIN cheat
+    ON toneless = mockers
+    WHERE prospectors = 'doorknob'
+) AS p
+JOIN bylaw
+ON lames = carburetor
